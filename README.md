@@ -11,3 +11,5 @@ Technologies Used:
 * Sass
 * Javascript
 * AngularJS
+* D3.js
+* Alchemy.js
