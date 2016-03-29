@@ -1,0 +1,11 @@
+<prefix name="socialinteractions" label="Social Interactions" language_tag="en" language_label="English">
+	
+	<key name="sidebar_item">
+		<value>Social Interactions</value>
+	</key>
+	
+	<key name="main_page_title">
+		<value>Social Interactions</value>
+	</key>
+	
+</prefix>
