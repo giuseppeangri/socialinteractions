@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+	<name>Social Interactions</name>
+	<key>socialinteractions</key>
+	<description>Social Interaction</description>
+  <author>Giuseppe Angri</author>
+  <authorEmail>info@giuseppeangri.com</authorEmail>
+	<authorUrl>http://www.giuseppeangri.com</authorUrl>
+	<developerKey>your_developer_key_here</developerKey>
+  <build>1</build>
+  <copyright>© 2015 Giuseppe Angri - All rights reserved.</copyright>
+	<license>The GNU GPLv3 License</license>
+  <licenseUrl>http://choosealicense.com/licenses/gpl-3.0/</licenseUrl>
+</plugin>
