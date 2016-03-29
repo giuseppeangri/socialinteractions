@@ -1,0 +1,414 @@
+<div class="container" ng-app="app" ng-controller="MainController as MainCtrl">
+	
+	<div class="header text-center">
+		<span><strong>Social Interactions</strong></span>
+	</div>
+	
+	<div>
+		
+		<ul class="tabs">
+			<li>
+			  <input type="radio" name="tabs" id="tab1" ng-click="MainCtrl.showSection(1)" ng-checked="plugin_section == 1" />
+			  <label class="head" for="tab1">Dashboard</label>
+			</li>
+			
+			<li>
+			  <input type="radio" name="tabs" id="tab2" ng-click="MainCtrl.showSection(2)" ng-checked="plugin_section == 2" />
+			  <label class="head" for="tab2">Dashboard Single User</label>
+			</li>
+			
+			<li>
+			  <input type="radio" name="tabs" id="tab3" ng-click="MainCtrl.showSection(3)" ng-checked="plugin_section == 3" />
+			  <label class="head" for="tab3">Graph Wizard</label>
+			</li>
+		</ul>
+	
+		<div id="tab-content1" class="tab-content" ng-if="plugin_section == 1" ng-controller="DashboardController as DbCtrl">
+	   
+	  	<div class="info">
+		  	<p>Welcome in Social Interactions!</p>
+		  	<p>This section gives an overview of all the Social Interactions</p>
+	  	</div>
+	  	
+			<div class="dashboard">
+				
+				<div class="section-leftbar">
+					<ul class="text-center">
+						<li ng-repeat="entity in dashboard_entities" ng-class="dashboard_selected == $index ? 'selected' : ''" ng-click="DbCtrl.updateSelected($index)">
+							<span>[[entity.name]]</span>
+						</li>
+					</ul>				
+				</div>
+			
+				<div class="section-rightcontent">
+					
+					<div ng-if="loading" class="loading-section text-center">
+						<img src="{$staticDir}/media/loading.gif">
+					</div>
+					
+					<div ng-if="!selected" class="noselection">
+						<p class="icon">&larr;</p>
+						<span class="text">Select an entity on the left</span>
+					</div>
+					
+					<table class="content text-center" ng-if="selected && !loading">
+						<tr>
+							<td colspan="3">
+								<span class="title"><strong>[[selected.name]]</strong></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span class="type">Today</span>
+							</td>
+							<td>
+								<span class="type">Last 7 Days</span>
+							</td>
+							<td>
+								<span class="type">Total</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span class="value"><strong>[[selected.today]]</strong></span>
+							</td>
+							<td>
+								<span class="value"><strong>[[selected.lastWeek]]</strong></span>
+							</td>
+							<td>
+								<span class="value"><strong>[[selected.total]]</strong></span>
+							</td>
+						</tr>
+					</table>
+				
+				</div>
+			
+			</div>
+	    
+	  </div>
+	
+	  <div id="tab-content2" class="tab-content" ng-if="plugin_section == 2" ng-controller="UserInfoController as UiCtrl">
+		  
+		  <div class="info">
+		  	<p>This section shows the Social Interactions of a Single User</p>
+		  	<p>Please Search an User by entering ID, Username or Email</p>
+			</div>
+		  
+		  <div class="content-bl">
+			  
+				<div class="search-section">
+					
+					<div class="keyword">
+						<input type="text" ng-model="preferences.userId" class="display_name_input" placeholder="Insert ID, Username or Email">
+					</div>
+					
+					<div class="confirm">
+						<div class="generate-div">
+							<button ng-click="UiCtrl.getData()">Search</button>
+						</div>
+					</div>
+					
+				</div>
+				
+				<div ng-if="loading" class="loading-section text-center">
+					<img src="{$staticDir}/media/loading.gif">
+				</div>
+			
+				<div ng-if="data && !loading" class="userinfo-section">
+					
+					<div class="leftbar">
+						
+						<div class="content">
+			  
+				  		<div class="avatar">
+				  			<img ng-if="!user.avatar_big" src="{$staticDir}/media/avatar.png" />
+				  			<img ng-if="user.avatar_big" ng-src="[[user.avatar_big]]" />
+				  		</div>
+				  		
+				  		<div class="label">
+				    		<span><strong>[[ user.realname ]]</strong></span>
+				  		</div>
+							
+						</div>
+						
+					</div>
+					
+					<div class="main">
+						<div class="content">
+							
+							<div class="topbar">
+								<ul>
+				  				<li ng-repeat="entity in entities" ng-click="UiCtrl.updateSelected($index)">
+										<span ng-class="index_selected == $index ? 'selected' : 'normal'">[[ entity.name ]]</span>
+									</li>
+								</ul>
+							</div>
+							
+							<div ng-if="selected.data" class="body-data">
+								<table class="text-center">
+							
+									<tr>
+										<td class="type">
+											<span class="type">ID:</span>
+										</td>
+										<td class="value">
+											<span class="type">[[ selected.data.id ]]</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="type">
+											<span class="type">Email:</span>
+										</td>
+										<td class="value">
+											<span class="type">[[ selected.data.email ]]</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="type">
+											<span class="type">Username:</span>
+										</td>
+										<td class="value">
+											<span class="type">[[ selected.data.username ]]</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="type">
+											<span class="type">Sex:</span>
+										</td>
+										<td class="value">
+											<span class="type">[[ selected.data.sex ]]</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="type">
+											<span class="type">Birthdate:</span>
+										</td>
+										<td class="value">
+											<span class="type">[[ selected.data.birthdate ]]</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="type">
+											<span class="type">Joindate:</span>
+										</td>
+										<td class="value">
+											<span class="type">[[ selected.data.joinDate ]]</span>
+										</td>
+									</tr>
+									
+								</table>
+							</div>
+			  
+			  			<div ng-if="!selected.data" class="body-value">
+			    			<table class="text-center">
+							
+									<tr>
+										<td>
+											<span class="type">Today</span>
+										</td>
+										<td>
+											<span class="type">Last 7 Days</span>
+										</td>
+										<td>
+											<span class="type">Total</span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="value"><strong>[[ selected.today ]]</strong></span>
+										</td>
+										<td>
+											<span class="value"><strong>[[ selected.lastWeek ]]</strong></span>
+										</td>
+										<td>
+											<span class="value"><strong>[[ selected.total ]]</strong></span>
+										</td>
+									</tr>
+								</table>
+			  			</div>
+							
+						</div>
+						
+					</div>
+					
+				</div>
+				
+			</div>
+		
+		</div>
+	
+		<div id="tab-content3" class="tab-content" ng-if="plugin_section == 3" ng-controller="GraphwizardController as GwCtrl">
+			
+			<div class="info">
+		  	<p>This section provides the Wizard to create Graphs</p>
+	  	</div>
+	  	
+	  	<div class="numered-description">
+		  	
+		  	<div class="round">
+			  	<span>
+					  <strong>1</strong>
+				  </span>
+		    </div>
+		    
+		    <span class="text">
+					Please select the Entity for Graph Nodes
+		    </span>
+		    
+	    </div>
+		
+		  <div class="graph-section flex-wrap">
+			  
+			  <div class="section subsection">
+					
+					<div class="header">
+						<h3 class="title">Select Graph's Node</h3>
+					</div>
+					
+					<div class="content">
+						
+						<div class="roundedTwo noselect" ng-repeat="node in graphwizard.nodesType">
+				      <span>[[node.name]]</span>
+				      <input type="radio" id="[[node.name]]" name="nodes" ng-model="graphwizard.selectedNode" ng-value="node" />
+				      <label for="[[node.name]]"></label>
+				    </div>
+			
+					</div>
+				
+				</div>
+				
+				<div class="numered-description" ng-if="graphwizard.selectedNode.edges">
+					
+			  	<div class="round">
+				  	<span>
+						  <strong>2</strong>
+					  </span>
+			    </div>
+			    
+			    <span class="text">
+			    	Please select the Relashionship for Graph Edges
+			    </span>
+			    
+		    </div>
+								
+				<div class="section subsection" ng-if="graphwizard.selectedNode.edges">
+					
+					<div class="header">
+						<h3 class="title">Select Graph's Edges</h3>
+					</div>
+					
+					<div class="content">
+						
+						<div class="roundedTwo noselect" ng-repeat="edge in graphwizard.selectedNode.edges">
+				      <span>[[edge.name]]</span>
+				      <input type="radio" id="[[edge.name]]" name="edges" ng-model="graphwizard.selectedEdge" ng-value="edge" />
+				      <label for="[[edge.name]]"></label>
+				    </div>
+						
+					</div>
+				
+				</div>
+				
+				<div class="numered-description" ng-if="graphwizard.selectedNode.otherNodes">
+					
+			  	<div class="round">
+				  	<span>
+						  <strong>2</strong>
+					  </span>
+			    </div>
+			    
+			    <span class="text">
+			    	Please select the Entity for Graph Other Nodes
+			    </span>
+			    
+		    </div>
+								
+				<div class="section subsection" ng-if="graphwizard.selectedNode.otherNodes">
+					
+					<div class="header">
+						<h3 class="title">Select Graph's Other Node</h3>
+					</div>
+					
+					<div class="content">
+						
+						<div class="roundedTwo noselect" ng-repeat="node in graphwizard.selectedNode.otherNodes">
+				      <span>[[node.name]]</span>
+				      <input type="checkbox" ng-model="graphwizard.selectedNode.otherNodes[$index].selected" id="[[node.name]]" name="[[node.name]]" />
+				      <label for="[[node.name]]"></label>
+				    </div>
+				    					
+					</div>
+				
+				</div>
+				
+				<div class="numered-description" ng-if="graphwizard.selectedNode.preferences">
+			  	
+			  	<div class="round">
+				  	<span>
+						  <strong>3</strong>
+					  </span>
+			    </div>
+			    
+			    <span class="text">
+			    	Please insert your Favorite Preferences
+			    </span>
+			    
+		    </div>
+								
+				<div class="section subsection" ng-if="graphwizard.selectedNode.preferences">
+					
+					<div class="header">
+						<h3 class="title">Graph's Preferences</h3>
+					</div>
+					
+					<div class="content">
+		
+						<table class="preferences-table">
+							
+							<tr ng-repeat="preference in graphwizard.selectedNode.preferences">
+								
+								<td class="type">
+									<span>[[preference.name]]</span>
+								</td>
+								
+								<td class="value">
+									<select ng-if=" preference.type == 'select' " ng-options="option as option.name for option in preference.options" ng-model="preference.selectedOption"></select>
+																			
+									<input type="text" ng-if=" preference.type == 'input' " ng-repeat="option in preference.options" ng-model="option.value" placeholder="[[option.name]]" class="display_name_input">
+								</td>
+								
+							</tr>
+							
+						</table>
+						
+					</div>
+				
+				</div>
+				
+				<div class="generate-div" ng-if=" (graphwizard.selectedNode && graphwizard.selectedNode.edges && graphwizard.selectedEdge) || (graphwizard.selectedNode && graphwizard.selectedNode.otherNodes) ">
+					<button ng-click="GwCtrl.generateGraph()">Generate Graph</button>
+				</div>
+				
+				<div class="section subsection" ng-if="loading_graph || data_graph">
+					
+					<div class="header">
+						<h2 class="title">Graph</h2>
+					</div>
+					
+					<div class="content flex-wrap animate-if text-center" id="graph">
+						
+						<div ng-if="loading_graph" class="loading-section text-center">
+								<img src="{$staticDir}/media/loading.gif">
+						</div>
+						
+					</div>
+							
+				</div>
+			
+			</div>
+		  
+		</div>
+	
+	</div>
+	
+</div>
